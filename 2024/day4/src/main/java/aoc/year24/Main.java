@@ -165,10 +165,10 @@ public class Main {
         List<List<Character>> majorDiagonals = listOfMajorDiagonals(rows);
         List<List<Character>> minorDiagonals = listOfMinorDiagonals(rows);
 
-        int rowXmasCount = findAllWord(rows, "XMAS") + findAllWord(rows, "SAMX");
-        int columnXmasCount = findAllWord(columns, "XMAS") + findAllWord(columns, "SAMX");
-        int majorDiagonalXmasCount = findAllWord(majorDiagonals, "XMAS") + findAllWord(majorDiagonals, "SAMX");
-        int minorDiagonalXmasCount = findAllWord(minorDiagonals, "XMAS") + findAllWord(minorDiagonals, "SAMX");
+        int rowXmasCount = findAllWord(rows, "XMAS");
+        int columnXmasCount = findAllWord(columns, "XMAS");
+        int majorDiagonalXmasCount = findAllWord(majorDiagonals, "XMAS");
+        int minorDiagonalXmasCount = findAllWord(minorDiagonals, "XMAS");
 
         int total = rowXmasCount + columnXmasCount + majorDiagonalXmasCount + minorDiagonalXmasCount;
         System.out.println("Total XMAS occurrences: " + total);

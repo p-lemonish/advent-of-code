@@ -16,5 +16,6 @@
         <module>day4</module>
         <module>day5</module>
         <module>input-reader</module>
+        <module>day6</module>
     </modules>
 </project>

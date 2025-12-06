@@ -54,14 +54,20 @@ func result(m [][]string) {
 }
 
 func partOne(m [][]string) {
-	for _, l := range m {
-		fmt.Println(l)
+	maxCols := 0
+	for _, row := range m {
+		if len(row) > maxCols {
+			maxCols = len(row)
+		}
 	}
-	mNew := make([][]string, len(m))
-	for i := range m {
-		lNew := make([]string, len(m[i]))
-		for j := range m[i] {
-			lNew[j] = strings.TrimSpace(m[j][i])
+
+	mNew := make([][]string, maxCols)
+	for i := range maxCols {
+		lNew := []string{}
+		for j := range m {
+			if i < len(m[j]) {
+				lNew = append(lNew, strings.TrimSpace(m[j][i]))
+			}
 		}
 		mNew[i] = lNew
 	}
@@ -69,10 +75,6 @@ func partOne(m [][]string) {
 }
 
 func partTwo(m [][]string) {
-	for _, l := range m {
-		fmt.Println(l)
-	}
-
 	rows := len(m)
 	rowStrs := make([]string, rows)
 	for i := range m {
@@ -84,7 +86,7 @@ func partTwo(m [][]string) {
 	curRow := []string{}
 	curOp := ""
 
-	for col := range cols {
+	for col := cols - 1; col >= 0; col-- {
 		newNumStr := ""
 		for row := range rows {
 			if col >= len(rowStrs[row]) {
@@ -106,7 +108,7 @@ func partTwo(m [][]string) {
 			curRow = append(curRow, newNumStr)
 		}
 		isSeparator := strings.TrimSpace(newNumStr) == ""
-		isLastCol := col == cols-1
+		isLastCol := col == 0
 
 		if (isSeparator || isLastCol) && len(curRow) > 0 {
 			if curOp != "" {
@@ -117,9 +119,6 @@ func partTwo(m [][]string) {
 			curOp = ""
 		}
 	}
-	for _, l := range mNew {
-		fmt.Println(l)
-	}
 	result(mNew)
 }
 
@@ -129,13 +128,12 @@ func getData(path string) [][]string {
 		fmt.Printf("No file %s found", path)
 	}
 	lines := strings.Split(string(data), "\n")
-	fmt.Printf("lines from data: %s\n", lines)
-	m := make([][]string, len(lines)-1)
-	for i, l := range lines {
+	m := [][]string{}
+	for _, l := range lines {
 		if len(l) != 0 {
 			re := regexp.MustCompile(`\s*(\d+|[*+])\s*`)
-			m[i] = re.FindAllString(l, -1)
-			fmt.Printf("adding to matrix: %s\n", m[i])
+			row := re.FindAllString(l, -1)
+			m = append(m, row)
 		}
 	}
 	return m
